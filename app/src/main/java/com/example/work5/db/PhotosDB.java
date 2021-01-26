@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.example.Work5_beta.model.Photo;
+import com.example.work5.model.Photo;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;

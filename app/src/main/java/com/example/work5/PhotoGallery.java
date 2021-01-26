@@ -27,8 +27,7 @@ import retrofit2.Response;
 
 public class PhotoGallery extends AppCompatActivity {
     // Настройки приложения
-    String flickr_api_key = "010cecfbb3aab485a030cca94df603de";
-
+    String flickr_api_key = "";
     // RecyclerView
     PhotoAdapter adapter;
     RecyclerView list_view;
@@ -132,6 +131,41 @@ public class PhotoGallery extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<FlickrPhotos> call, Throwable t) {
                     Toast.makeText(PhotoGallery.this, "An error occurred during networking", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    //Получить изображния из БД
+    public void getPhotosFromDB() {
+        photos_db.request(
+                () -> photos = photos_db.photoDao().LoadAll(),
+                () -> adapter.updatePhotoList(photos)
+        );
+    }
+
+    //GET запрос на flickr для получения изображений по введенному запросу в поиске
+    public void getSearchPhotosFromFlickr(String text) {
+        if (flickr_api_key != "") {
+            ServiceAPI.getFlickrAPI().getSearchPhotos(flickr_api_key, text).enqueue(new Callback<FlickrPhotos>() {
+                @Override
+                public void onResponse(Call<FlickrPhotos> call, Response<FlickrPhotos> response) {
+                    // Если ответ с сервера придет в виде с ошибкой, то возникнет ошибка
+                    try {
+                        photos = response.body().getPhotos().getPhoto();
+                        adapter.updatePhotoList(photos);
+                    }
+                    // Обработка ошибок
+                    catch (Exception error) {
+                        Toast.makeText(PhotoGallery.this, "Error Token.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                @Override
+                public void onFailure(Call<FlickrPhotos> call, Throwable t) {
+                    Toast.makeText(PhotoGallery.this,
+                            "An error occurred during networking",
+                            Toast.LENGTH_SHORT
+                    ).show();
                 }
             });
         }

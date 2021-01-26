@@ -1,6 +1,6 @@
 package com.example.work5.api;
 
-import com.example.Work5_beta.model.FlickrPhotos;
+import com.example.work5.model.FlickrPhotos;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
