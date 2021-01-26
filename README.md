@@ -3,3 +3,5 @@
 
 ##
 Для проверки приложения необходимо вставить свой key (от api flickr) в переменную key_flickr (Файл PhotoGallery).
+
+![Alt text](../screenshots/1.png?raw=true "Title")
