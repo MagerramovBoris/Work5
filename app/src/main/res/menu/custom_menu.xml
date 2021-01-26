@@ -11,7 +11,7 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
     <item
         android:id="@+id/photo_db"
-        android:title="Локальная БД" />
+        android:title="БД" />
     <item
         android:id="@+id/photo_flickr"
         android:title="Flickr" />
