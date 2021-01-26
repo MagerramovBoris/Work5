@@ -27,7 +27,11 @@ import retrofit2.Response;
 
 public class PhotoGallery extends AppCompatActivity {
     // Настройки приложения
-    String flickr_api_key = "";
+    String key_flickr = "";
+
+
+
+
     // RecyclerView
     PhotoAdapter adapter;
     RecyclerView list_view;
@@ -103,7 +107,6 @@ public class PhotoGallery extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         boolean is_removed = intent.getBooleanExtra("is_removed", false);
-        String new_flickr_api_key = intent.getStringExtra("new_flickr_api_key");
         //Если произошло удаление фото из БД, то удалить данное фото из списка
         if (is_removed) {
             int position = intent.getIntExtra("position", 0);
@@ -114,8 +117,8 @@ public class PhotoGallery extends AppCompatActivity {
 
     //GET запрос на flickr для получения общедоступных изображений
     public void getPhotosFromFlickr() {
-        if (flickr_api_key != "") {
-            ServiceAPI.getFlickrAPI().getRecent(flickr_api_key).enqueue(new Callback<FlickrPhotos>() {
+        if (key_flickr != "") {
+            ServiceAPI.getFlickrAPI().getRecent(key_flickr).enqueue(new Callback<FlickrPhotos>() {
                 @Override
                 public void onResponse(Call<FlickrPhotos> call, Response<FlickrPhotos> response) {
                     // Если ответ с сервера придет в виде с ошибкой, то возникнет ошибка
@@ -146,8 +149,8 @@ public class PhotoGallery extends AppCompatActivity {
 
     //GET запрос на flickr для получения изображений по введенному запросу в поиске
     public void getSearchPhotosFromFlickr(String text) {
-        if (flickr_api_key != "") {
-            ServiceAPI.getFlickrAPI().getSearchPhotos(flickr_api_key, text).enqueue(new Callback<FlickrPhotos>() {
+        if (key_flickr != "") {
+            ServiceAPI.getFlickrAPI().getSearchPhotos(key_flickr, text).enqueue(new Callback<FlickrPhotos>() {
                 @Override
                 public void onResponse(Call<FlickrPhotos> call, Response<FlickrPhotos> response) {
                     // Если ответ с сервера придет в виде с ошибкой, то возникнет ошибка
